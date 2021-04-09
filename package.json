@@ -1,0 +1,80 @@
+{
+  "name": "@fungyproof/badge",
+  "version": "0.0.1",
+  "private": true,
+  "author": "Mike Roth <mike@manyuses.com>",
+  "scripts": {
+    "build": "NODE_ENV=production vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
+    "test:e2e": "vue-cli-service test:e2e",
+    "lint": "vue-cli-service lint",
+    "start": "vue-cli-service serve",
+    "svg": "vsvg -s ./src/icons/svg -t ./src/icons/components --ext ts --es6"
+  },
+  "dependencies": {
+    "@koumoul/vjsf": "^1.25.0-beta.3",
+    "@walletconnect/web3-provider": "^1.4.1",
+    "axios": "^0.19.2",
+    "clipboard": "^2.0.6",
+    "core-js": "^3.6.5",
+    "fortmatic": "^2.2.1",
+    "js-cookie": "^2.2.1",
+    "nprogress": "^0.2.0",
+    "register-service-worker": "^1.7.1",
+    "vue": "^2.6.11",
+    "vue-class-component": "^7.2.3",
+    "vue-clipboard2": "^0.3.1",
+    "vue-i18n": "^8.18.2",
+    "vue-property-decorator": "^8.4.2",
+    "vuetify": "^2.3.1",
+    "vuex": "^3.4.0",
+    "vuex-module-decorators": "^0.17.0"
+  },
+  "devDependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "@toruslabs/torus-embed": "^1.9.14",
+    "@types/clipboard": "^2.0.1",
+    "@types/jest": "^24.0.19",
+    "@types/js-cookie": "^2.2.6",
+    "@types/node": "^14.14.37",
+    "@types/nprogress": "^0.2.0",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "@vue/cli-plugin-babel": "~4.4.0",
+    "@vue/cli-plugin-e2e-cypress": "~4.4.0",
+    "@vue/cli-plugin-eslint": "^4.4.4",
+    "@vue/cli-plugin-pwa": "~4.4.0",
+    "@vue/cli-plugin-router": "~4.4.0",
+    "@vue/cli-plugin-typescript": "~4.4.0",
+    "@vue/cli-plugin-unit-jest": "~4.4.0",
+    "@vue/cli-plugin-vuex": "~4.4.0",
+    "@vue/cli-service": "~4.4.0",
+    "@vue/eslint-config-standard": "^5.1.2",
+    "@vue/eslint-config-typescript": "^5.0.2",
+    "@vue/test-utils": "^1.0.3",
+    "eslint": "^7.3.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
+    "typescript": "~3.7.4",
+    "vue-cli-plugin-vuetify": "~2.0.5",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manyuses/fungyproof.git"
+  },
+  "gitHooks": {
+    "pre-commit": "yarn lint"
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "vue-cli-service lint"
+    ]
+  }
+}
