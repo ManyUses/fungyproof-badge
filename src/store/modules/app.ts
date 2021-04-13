@@ -35,6 +35,25 @@ class App extends VuexModule implements IAppState {
   public language = getLocale()
   public size = getSize() || 'medium'
 
+  public tokenAddress = ''
+  public tokenId = ''
+  public tokenVerified = false
+
+  @Mutation
+  private SET_TOKEN_ADDRESS(tokenAddress: string) {
+    this.tokenAddress = tokenAddress
+  }
+
+  @Mutation
+  private SET_TOKEN_ID(tokenId: string) {
+    this.tokenId = tokenId
+  }
+
+  @Mutation
+  private SET_TOKEN_VERIFIED(verified: boolean) {
+    this.tokenVerified = verified
+  }
+
   @Mutation
   private SET_DIALOG_STATE(state: {
     dialog: string
@@ -61,6 +80,18 @@ class App extends VuexModule implements IAppState {
   private SET_SIZE(size: string) {
     this.size = size
     setSize(this.size)
+  }
+
+  @Action
+  public SetToken(token: {
+    address: string
+    id: string
+    verified: boolean
+  }) {
+    console.log(token)
+    this.SET_TOKEN_ADDRESS(token.address)
+    this.SET_TOKEN_ID(token.id || '')
+    this.SET_TOKEN_VERIFIED(token.verified || false)
   }
 
   @Action

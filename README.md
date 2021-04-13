@@ -11,7 +11,7 @@ Create an embeddable badge for token holders and token creation platforms which 
 
 ```html
 <script src="https://funyproof.com/badge.js">
-<div id="fp-badge" data-contract="0x2352525" data-id="12">
+<div id="fp-badge" data-contract="0x2352525" data-token="12">
 ```
 
 

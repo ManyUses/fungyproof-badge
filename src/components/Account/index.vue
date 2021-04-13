@@ -50,9 +50,8 @@
             <span v-else>Connect Wallet</span>
           </v-btn>
         </v-list-item>
-        <v-list-item>
+        <v-list-item v-if="address">
           <v-btn
-            v-if="address"
             small
             block
             color="default"
