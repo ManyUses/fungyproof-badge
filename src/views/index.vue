@@ -1,11 +1,20 @@
 <template>
   <v-app :style="{background: $vuetify.theme.themes[theme].background}">
     <Account />
-    <v-tabs v-if="address" right>
-      <v-tab @click="view = 'Token'" :ripple="false">
+    <v-tabs
+      v-if="verified"
+      right
+    >
+      <v-tab
+        :ripple="false"
+        @click="view = 'Token'"
+      >
         Token
       </v-tab>
-      <v-tab @click="view = 'Grade'" :ripple="false">
+      <v-tab
+        :ripple="false"
+        @click="view = 'Grade'"
+      >
         Grade
       </v-tab>
     </v-tabs>
@@ -17,9 +26,10 @@ import { Component, Watch } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 import { DeviceType } from '@/store/modules/app'
 import { AuthModule } from '@/store/modules/auth'
-import ResizeMixin from '@/views/mixin/resize'
+import ResizeMixin from '@/mixins/resize'
 import Account from '@/components/Account/index.vue'
 import Connect from '@/views/Connect/index.vue'
+import Verify from '@/views/Verify/index.vue'
 import Token from '@/views/Token/index.vue'
 import Grade from '@/views/Grade/index.vue'
 
@@ -28,17 +38,16 @@ import Grade from '@/views/Grade/index.vue'
   components: {
     Account,
     Connect,
+    Verify,
     Token,
     Grade
   }
 })
 export default class extends mixins(ResizeMixin) {
-  private view = 'Connect'
+  private view = 'Token'
 
-  get classObj() {
+  private get classObj() {
     return {
-      // hideSidebar: !this.sidebar.opened,
-      // openSidebar: this.sidebar.opened,
       mobile: this.device === DeviceType.Mobile
     }
   }
@@ -51,18 +60,27 @@ export default class extends mixins(ResizeMixin) {
     return AuthModule.address
   }
 
-  @Watch('address')
-  private watchAddr() {
-    if (this.address) {
-      this.view = 'Token'
-    } else {
-      this.view = 'Connect'
-    }
+  private get verified() {
+    return AuthModule.verified
   }
 
-  // private handleClickOutside() {
-  //   AppModule.CloseSideBar()
-  // }
+  public mounted() {
+    this.setView()
+  }
+
+  @Watch('address')
+  private watchAddress() {
+    this.setView()
+  }
+
+  @Watch('verified')
+  private watchVerified() {
+    this.setView()
+  }
+
+  private setView() {
+    this.view = (this.verified ? 'Token' : (this.address ? 'Verify' : 'Connect'))
+  }
 }
 </script>
 <style scoped>

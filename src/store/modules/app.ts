@@ -35,23 +35,17 @@ class App extends VuexModule implements IAppState {
   public language = getLocale()
   public size = getSize() || 'medium'
 
-  public tokenAddress = ''
+  public contract = ''
   public tokenId = ''
-  public tokenVerified = false
 
   @Mutation
-  private SET_TOKEN_ADDRESS(tokenAddress: string) {
-    this.tokenAddress = tokenAddress
+  private SET_TOKEN_ADDRESS(contract: string) {
+    this.contract = contract
   }
 
   @Mutation
   private SET_TOKEN_ID(tokenId: string) {
     this.tokenId = tokenId
-  }
-
-  @Mutation
-  private SET_TOKEN_VERIFIED(verified: boolean) {
-    this.tokenVerified = verified
   }
 
   @Mutation
@@ -83,24 +77,21 @@ class App extends VuexModule implements IAppState {
   }
 
   @Action
-  public SetToken(token: {
+  public setToken(token: {
     address: string
     id: string
-    verified: boolean
   }) {
-    console.log(token)
     this.SET_TOKEN_ADDRESS(token.address)
     this.SET_TOKEN_ID(token.id || '')
-    this.SET_TOKEN_VERIFIED(token.verified || false)
   }
 
   @Action
-  public ToggleDevice(device: DeviceType) {
+  public toggleDevice(device: DeviceType) {
     this.TOGGLE_DEVICE(device)
   }
 
   @Action
-  public SetDialogState(state: {
+  public setDialogState(state: {
     dialog: string
     state: boolean
   }) {
@@ -108,12 +99,12 @@ class App extends VuexModule implements IAppState {
   }
 
   @Action
-  public SetLanguage(language: string) {
+  public setLanguage(language: string) {
     this.SET_LANGUAGE(language)
   }
 
   @Action
-  public SetSize(size: string) {
+  public setSize(size: string) {
     this.SET_SIZE(size)
   }
 }

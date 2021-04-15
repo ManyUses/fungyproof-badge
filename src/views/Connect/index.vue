@@ -1,7 +1,7 @@
 <template>
   <div class="view-main">
     <p class="text-center">
-      Connect a wallet to verify ownership of {{ tokenAddress }} ({{ tokenId }}) for "{{ origin }}"
+      Connect a wallet to verify ownership of {{ contract }} ({{ tokenId }}) for "{{ origin }}"
     </p>
     <ConnectBtn />
   </div>
@@ -19,8 +19,8 @@ import { AppModule } from '@/store/modules/app'
   }
 })
 export default class extends Vue {
-  get tokenAddress() {
-    return AppModule.tokenAddress
+  get contract() {
+    return AppModule.contract
   }
 
   get tokenId() {

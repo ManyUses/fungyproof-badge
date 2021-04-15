@@ -1,6 +1,9 @@
 <template>
   <div class="view-grade">
-    <v-row flex align="center">
+    <v-row
+      flex
+      align="center"
+    >
       <v-col>
         <v-img
           src="img/grade-badge-b.jpg"

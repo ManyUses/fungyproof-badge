@@ -7,7 +7,7 @@ const ENV = process.env.NODE_ENV
 
 module.exports = {
   transpileDependencies: [
-    'vuetify', /@koumoul/
+    'vuetify'
   ],
   lintOnSave: ENV === 'development',
   publicPath: (~['production', 'stage'].indexOf(ENV)) ? '/embed/' : '/',

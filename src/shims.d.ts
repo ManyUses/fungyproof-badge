@@ -7,5 +7,3 @@ declare module '*.json' {
   const value: { [key: string]: any }
   export default value
 }
-
-declare module '@koumoul/vjsf/lib/VJsf.js'

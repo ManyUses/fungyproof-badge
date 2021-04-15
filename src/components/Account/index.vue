@@ -78,14 +78,14 @@
   </v-menu>
 </template>
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { AuthModule } from '@/store/modules/auth'
 import { EventBus } from '@/event-bus'
-import { getChain } from '@/utils/chain'
+import { getChain } from '@fungyproof/eth-nft'
 
-import WalletConnectProvider from '@walletconnect/web3-provider'
-import Fortmatic from 'fortmatic'
-import Torus from '@toruslabs/torus-embed'
+// import WalletConnectProvider from '@walletconnect/web3-provider'
+// import Fortmatic from 'fortmatic'
+// import Torus from '@toruslabs/torus-embed'
 
 @Component({
   name: 'Account'
@@ -129,25 +129,27 @@ export default class extends Vue {
     // init web3 modal
     this.modal = new Web3Modal({
       network: 'mainnet',
-      cacheProvider: true,
-      providerOptions: {
-        cacheProvider: false,
-        walletconnect: {
-          package: WalletConnectProvider,
-          options: {
-            infuraId: '8629530900274ca9bd4bc62e37f65052'
-          }
-        },
-        fortmatic: {
-          package: Fortmatic,
-          options: {
-            key: 'pk_live_4A196B9CF3B7972D'
-          }
-        },
-        torus: {
-          package: Torus
-        }
-      }
+      cacheProvider: true
+      // TODO enable once we get signing
+      // sorted on all providers
+      // providerOptions: {
+      //   cacheProvider: false,
+      //   walletconnect: {
+      //     package: WalletConnectProvider,
+      //     options: {
+      //       infuraId: '8629530900274ca9bd4bc62e37f65052'
+      //     }
+      //   },
+      //   fortmatic: {
+      //     package: Fortmatic,
+      //     options: {
+      //       key: 'pk_live_4A196B9CF3B7972D'
+      //     }
+      //   },
+      //   torus: {
+      //     package: Torus
+      //   }
+      // }
     })
 
     // listen to toggle
@@ -157,11 +159,12 @@ export default class extends Vue {
     // this.modal.clearCachedProvider()
     this.modal.clearCachedProvider()
     this.modal.on('connect', (provider: any) => {
-      AuthModule.setAddress(provider.selectedAddress)
+      AuthModule.setAddress(provider?.selectedAddress)
       AuthModule.setProvider(provider)
 
       // handle account changes
       provider.on('accountsChanged', (addresses: string[]) => {
+        console.log(addresses)
         AuthModule.setAddress(provider.selectedAddress)
       })
     })

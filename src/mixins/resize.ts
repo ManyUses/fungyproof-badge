@@ -1,7 +1,7 @@
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { AppModule, DeviceType } from '@/store/modules/app'
 
-const WIDTH = 992 // refer to material responsive design
+const WIDTH = 992 // material responsive design
 
 @Component({
   name: 'ResizeMixin'
@@ -11,17 +11,6 @@ export default class extends Vue {
     return AppModule.device
   }
 
-  // get sidebar() {
-  //   return AppModule.sidebar
-  // }
-
-  // @Watch('$route')
-  // private onRouteChange() {
-  //   if (this.device === DeviceType.Mobile && this.sidebar.opened) {
-  //     AppModule.CloseSideBar()
-  //   }
-  // }
-
   beforeMount() {
     window.addEventListener('resize', this.resizeHandler)
   }
@@ -29,8 +18,8 @@ export default class extends Vue {
   mounted() {
     const isMobile = this.isMobile()
     if (isMobile) {
-      AppModule.ToggleDevice(DeviceType.Mobile)
-      // AppModule.CloseSideBar()
+      AppModule.toggleDevice(DeviceType.Mobile)
+      // TODO mobile specific state changes
     }
   }
 
@@ -46,9 +35,9 @@ export default class extends Vue {
   private resizeHandler() {
     if (!document.hidden) {
       const isMobile = this.isMobile()
-      AppModule.ToggleDevice(isMobile ? DeviceType.Mobile : DeviceType.Desktop)
+      AppModule.toggleDevice(isMobile ? DeviceType.Mobile : DeviceType.Desktop)
       if (isMobile) {
-        // AppModule.CloseSideBar()
+        // TODO mobile specific state changes
       }
     }
   }

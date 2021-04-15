@@ -4,6 +4,8 @@ import i18n from '@/lang'
 import vuetify from '@/plugins/vuetify'
 import store from '@/store'
 
+import { certifyNFT } from '@/utils/api'
+
 import '@/pwa/register-service-worker'
 
 Vue.config.productionTip = false
@@ -12,14 +14,21 @@ new Vue({
   i18n,
   vuetify,
   store,
-  beforeMount() {
+  async beforeMount() {
     const id = this.$el.getAttribute('data-token') || ''
     const address = this.$el.getAttribute('data-contract') || ''
+    this.$store.dispatch('setToken', { id, address })
 
-    // TODO check if Address/ID is verified at this origin
+    // check if Address/ID is verified at this origin
     // otherwise trigger message signature requirement
-    const verified = false
-    this.$store.dispatch('SetToken', { id, address, verified })
+    const result = await certifyNFT({
+      contract: address,
+      tokenId: id
+    })
+
+    if (result.code === 200) {
+      this.$store.dispatch('setVerified', true)
+    }
   },
   render: (h) => h(App)
 }).$mount('#app')
