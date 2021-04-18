@@ -1,19 +1,16 @@
 <template>
   <div>
-    <service-worker-update-popup />
     <Views />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import ServiceWorkerUpdatePopup from '@/pwa/components/ServiceWorkerUpdatePopup.vue'
 import Views from '@/views/index.vue'
 
 @Component({
   name: 'App',
   components: {
-    ServiceWorkerUpdatePopup,
     Views
   }
 })

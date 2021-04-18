@@ -1,3 +1,4 @@
+
 import Vue from 'vue'
 import { getModule } from 'vuex-module-decorators'
 import App from '@/App.vue'
@@ -7,7 +8,7 @@ import { createStore } from '@/store'
 import { certifyNFT } from '@/utils/api'
 import { AppModule } from '@/store/modules/app'
 
-import '@/pwa/register-service-worker'
+(window as any).Web3Modal = require('web3modal')
 
 Vue.config.productionTip = false
 
@@ -22,7 +23,6 @@ for (let i = 0; i < nodes.length; ++i) {
       const appModule = getModule(AppModule, this.$store)
       const id = this.$el.getAttribute('token-id') || ''
       const address = this.$el.getAttribute('contract') || ''
-      console.log(id, address)
       appModule.setToken({ id, address })
 
       // check if Address/ID is verified at this origin
