@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
+import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 import {
   getSize,
   setLanguage,
@@ -7,7 +7,6 @@ import {
   setOnboarding
 } from '@/utils/storage'
 import { getLocale } from '@/lang'
-import store from '@/store'
 
 export enum DeviceType {
   Mobile,
@@ -25,8 +24,8 @@ export interface IAppState {
   size: string
 }
 
-@Module({ dynamic: true, store, name: 'app' })
-class App extends VuexModule implements IAppState {
+@Module({ name: 'app', stateFactory: true })
+export class AppModule extends VuexModule implements IAppState {
   public dialog: DialogState = {
     account: false
   }
@@ -108,5 +107,3 @@ class App extends VuexModule implements IAppState {
     this.SET_SIZE(size)
   }
 }
-
-export const AppModule = getModule(App)

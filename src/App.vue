@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <service-worker-update-popup />
     <Views />
   </div>

@@ -10,7 +10,7 @@ export default class extends Vue {
   private refreshButtonText = 'Refresh'
   private registration: ServiceWorkerRegistration | null = null
 
-  created() {
+  public created() {
     // Listen for swUpdated event and display refresh notification as required.
     document.addEventListener('swUpdated', this.showRefreshUI, { once: true })
     // Refresh all open app tabs when a new service worker is installed.
@@ -21,7 +21,7 @@ export default class extends Vue {
     })
   }
 
-  render() {
+  public render() {
     // Avoid warning for missing template
   }
 

@@ -1,5 +1,4 @@
-import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators'
-import store from '@/store'
+import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 
 export type INotification = {
   color: string
@@ -11,8 +10,8 @@ export interface INotificationState {
   notifications: INotification[]
 }
 
-@Module({ dynamic: true, store, name: 'notifications' })
-class Notification extends VuexModule implements INotificationState {
+@Module({ name: 'notifications', stateFactory: true })
+export class NotificationsModule extends VuexModule implements INotificationState {
   public notifications: INotification[] = []
 
   @Mutation
@@ -60,5 +59,3 @@ class Notification extends VuexModule implements INotificationState {
     this.CLEAR_NOTIFICATIONS(force)
   }
 }
-
-export const NotificationsModule = getModule(Notification)

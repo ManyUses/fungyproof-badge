@@ -79,6 +79,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
 import { AuthModule } from '@/store/modules/auth'
 import { EventBus } from '@/event-bus'
 import { getChain } from '@fungyproof/eth-nft'
@@ -95,31 +96,35 @@ export default class extends Vue {
   private modal: any = null
   private loaded = false
 
-  get color() {
+  private get authModule() {
+    return getModule(AuthModule, this.$store)
+  }
+
+  private get color() {
     return this.address ? 'success' : 'primary'
   }
 
-  get address() {
-    return AuthModule.address
+  private get address() {
+    return this.authModule.address
   }
 
-  get provider() {
-    return AuthModule.provider
+  private get provider() {
+    return this.authModule.provider
   }
 
-  get chainId() {
-    return (AuthModule.provider as any)?.chainId
+  private get chainId() {
+    return (this.authModule.provider as any)?.chainId
   }
 
-  get chain() {
+  private get chain() {
     return getChain(this.chainId)
   }
 
-  get chainName() {
+  private get chainName() {
     return this.chainId ? this.chain?.name : 'n/a'
   }
 
-  get chainURL() {
+  private get chainURL() {
     return this.chainId ? this.chain?.infoURL : '#'
   }
 
@@ -159,13 +164,13 @@ export default class extends Vue {
     // this.modal.clearCachedProvider()
     this.modal.clearCachedProvider()
     this.modal.on('connect', (provider: any) => {
-      AuthModule.setAddress(provider?.selectedAddress)
-      AuthModule.setProvider(provider)
+      this.authModule.setAddress(provider?.selectedAddress)
+      this.authModule.setProvider(provider)
 
       // handle account changes
       provider.on('accountsChanged', (addresses: string[]) => {
         console.log(addresses)
-        AuthModule.setAddress(provider.selectedAddress)
+        this.authModule.setAddress(provider.selectedAddress)
       })
     })
 
@@ -188,7 +193,7 @@ export default class extends Vue {
       await (this.provider as any)?.close()
     }
     await this.modal.clearCachedProvider()
-    AuthModule.setAddress('')
+    this.authModule.setAddress('')
   }
 }
 </script>

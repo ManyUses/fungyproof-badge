@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
 import { getChain } from '@fungyproof/eth-nft'
 import { AppModule } from '@/store/modules/app'
 import { AuthModule } from '@/store/modules/auth'
@@ -24,31 +25,39 @@ import { certifyNFT } from '@/utils/api'
   components: {}
 })
 export default class extends Vue {
-  get contract() {
-    return AppModule.contract
+  private get authModule() {
+    return getModule(AuthModule, this.$store)
   }
 
-  get tokenId() {
-    return AppModule.tokenId
+  private get appModule() {
+    return getModule(AppModule, this.$store)
   }
 
-  get origin() {
+  private get contract() {
+    return this.appModule.contract
+  }
+
+  private get tokenId() {
+    return this.appModule.tokenId
+  }
+
+  private get origin() {
     return window.location.hostname
   }
 
-  get provider() {
-    return AuthModule.provider
+  private get provider() {
+    return this.authModule.provider
   }
 
-  get address() {
-    return AuthModule.address
+  private get address() {
+    return this.authModule.address
   }
 
-  get chainId() {
-    return (AuthModule.provider as any)?.chainId
+  private get chainId() {
+    return (this.authModule.provider as any)?.chainId
   }
 
-  get chain() {
+  private get chain() {
     return getChain(this.chainId)
   }
 
@@ -65,7 +74,7 @@ export default class extends Vue {
       )
 
       if (result.code === 200) {
-        AuthModule.setVerified(true)
+        this.authModule.setVerified(true)
       } else {
         console.log(result)
       }

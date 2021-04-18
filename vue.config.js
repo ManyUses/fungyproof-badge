@@ -10,7 +10,7 @@ module.exports = {
     'vuetify'
   ],
   lintOnSave: ENV === 'development',
-  publicPath: (~['production', 'stage'].indexOf(ENV)) ? '/embed/' : '/',
+  publicPath: (~['production', 'stage'].indexOf(ENV)) ? '/badge/' : '/',
   productionSourceMap: false,
   devServer: {
     port: DEV_PORT,

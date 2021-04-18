@@ -23,6 +23,7 @@
 </template>
 <script lang="ts">
 import { Component, Watch } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
 import { mixins } from 'vue-class-component'
 import { DeviceType } from '@/store/modules/app'
 import { AuthModule } from '@/store/modules/auth'
@@ -46,6 +47,10 @@ import Grade from '@/views/Grade/index.vue'
 export default class extends mixins(ResizeMixin) {
   private view = 'Token'
 
+  private get authModule() {
+    return getModule(AuthModule, this.$store)
+  }
+
   private get classObj() {
     return {
       mobile: this.device === DeviceType.Mobile
@@ -57,11 +62,11 @@ export default class extends mixins(ResizeMixin) {
   }
 
   private get address() {
-    return AuthModule.address
+    return this.authModule.address
   }
 
   private get verified() {
-    return AuthModule.verified
+    return this.authModule.verified
   }
 
   public mounted() {

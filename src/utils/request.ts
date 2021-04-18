@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { NotificationsModule } from '@/store/modules/notifications'
+import { getModule } from 'vuex-module-decorators'
 
 /**
  * ENV / URLS
@@ -31,19 +32,20 @@ const service = axios.create({
 service.interceptors.response.use(
   (response) => (response),
   (error) => {
+    const notificationsModule = getModule(NotificationsModule)
     const status = error.response ? error.response.status : ''
     switch (status) {
       case 400:
         const errors = error.response.data.errors
         const message = errors ? JSON.stringify(error.response.data.errors, null, 2) : error.response.data.message
         
-        NotificationsModule.queue({
+        notificationsModule.queue({
           message,
           color: 'error'
         })
         break
       case 401:
-        NotificationsModule.queue({
+        notificationsModule.queue({
           message: 'You do not have permissions to perform this action',
           color: 'warning',
           action: () => {
@@ -52,7 +54,7 @@ service.interceptors.response.use(
         })
         break
       case 403:
-        NotificationsModule.queue({
+        notificationsModule.queue({
           message: 'You do not have permissions to perform this action',
           color: 'warning',
           action: () => {
@@ -61,13 +63,13 @@ service.interceptors.response.use(
         })
         break
       case 429:
-        NotificationsModule.queue({
+        notificationsModule.queue({
           message: 'Too many requests, please wait',
           color: 'warning'
         })
         break
       default:
-        NotificationsModule.queue({
+        notificationsModule.queue({
           message: error.response ? error.response.data.message : error.message,
           color: 'error'
         })

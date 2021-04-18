@@ -24,6 +24,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
 import { AuthModule } from '@/store/modules/auth'
 
 @Component({
@@ -31,8 +32,12 @@ import { AuthModule } from '@/store/modules/auth'
   components: {}
 })
 export default class extends Vue {
-  get address() {
-    return AuthModule.address
+  private get authModule() {
+    return getModule(AuthModule, this.$store)
+  }
+
+  private get address() {
+    return this.authModule.address
   }
 }
 </script>

@@ -1,14 +1,13 @@
-import { VuexModule, Module, Action, Mutation, getModule } from 'vuex-module-decorators'
+import { VuexModule, Module, Action, Mutation } from 'vuex-module-decorators'
 import { getAddress } from '@/utils/storage'
-import store from '@/store'
 
 export interface IAuthState {
   provider: any
   address: string
 }
 
-@Module({ dynamic: true, store, name: 'auth' })
-class Auth extends VuexModule implements IAuthState {
+@Module({ name: 'auth', stateFactory: true })
+export class AuthModule extends VuexModule implements IAuthState {
   public address = getAddress() || ''
   public provider = null
   public verified = false
@@ -43,5 +42,3 @@ class Auth extends VuexModule implements IAuthState {
     this.SET_VERIFIED(verified || false)
   }
 }
-
-export const AuthModule = getModule(Auth)

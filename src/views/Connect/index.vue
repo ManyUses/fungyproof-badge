@@ -9,6 +9,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
 import ConnectBtn from '@/components/ConnectBtn/index.vue'
 import { AppModule } from '@/store/modules/app'
 
@@ -19,15 +20,19 @@ import { AppModule } from '@/store/modules/app'
   }
 })
 export default class extends Vue {
-  get contract() {
-    return AppModule.contract
+  private get appModule() {
+    return getModule(AppModule, this.$store)
   }
 
-  get tokenId() {
-    return AppModule.tokenId
+  private get contract() {
+    return this.appModule.contract
   }
 
-  get origin() {
+  private get tokenId() {
+    return this.appModule.tokenId
+  }
+
+  private get origin() {
     return window.location.hostname
   }
 }
