@@ -1,16 +1,24 @@
 import { VuexModule, Module, Action, Mutation } from 'vuex-module-decorators'
 import { getAddress } from '@/utils/storage'
 
+export type NFTCertificate = {
+  networkId: number
+  address: string // account address
+  signature: string // original signature
+  timestamp: number // unix time certificate was issued
+}
+
 export interface IAuthState {
   provider: any
   address: string
+  cert: NFTCertificate|null
 }
 
 @Module({ name: 'auth', stateFactory: true })
 export class AuthModule extends VuexModule implements IAuthState {
   public address = getAddress() || ''
   public provider = null
-  public verified = false
+  public cert = null
 
   @Mutation
   private SET_ADDRESS(address: string) {
@@ -23,8 +31,8 @@ export class AuthModule extends VuexModule implements IAuthState {
   }
 
   @Mutation
-  private SET_VERIFIED(verified: boolean) {
-    this.verified = verified
+  private SET_CERT(cert: any) {
+    this.cert = cert
   }
 
   @Action
@@ -38,7 +46,7 @@ export class AuthModule extends VuexModule implements IAuthState {
   }
 
   @Action
-  public setVerified(verified: boolean) {
-    this.SET_VERIFIED(verified || false)
+  public setCert(cert: any) {
+    this.SET_CERT(cert || null)
   }
 }

@@ -2,7 +2,7 @@
   <v-app :style="{background: $vuetify.theme.themes[theme].background}">
     <Account />
     <v-tabs
-      v-if="verified"
+      v-if="cert"
       right
     >
       <v-tab
@@ -65,8 +65,8 @@ export default class extends mixins(ResizeMixin) {
     return this.authModule.address
   }
 
-  private get verified() {
-    return this.authModule.verified
+  private get cert() {
+    return this.authModule.cert
   }
 
   public mounted() {
@@ -78,13 +78,13 @@ export default class extends mixins(ResizeMixin) {
     this.setView()
   }
 
-  @Watch('verified')
-  private watchVerified() {
+  @Watch('cert')
+  private watchCert() {
     this.setView()
   }
 
   private setView() {
-    this.view = (this.verified ? 'Token' : (this.address ? 'Verify' : 'Connect'))
+    this.view = (this.cert ? 'Token' : (this.address ? 'Verify' : 'Connect'))
   }
 }
 </script>

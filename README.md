@@ -10,8 +10,8 @@ Create an embeddable badge for token holders and token creation platforms which 
 ---
 
 ```html
-<script src="https://funyproof.com/badge.js">
-<div id="fp-badge" data-contract="0x2352525" data-token="12">
+<script src="https://funyproof.com/badge.js" />
+<fungy-proof-badge contract="0x2352525..." token-id="12" />
 ```
 
 

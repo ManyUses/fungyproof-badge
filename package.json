@@ -20,6 +20,7 @@
     "fortmatic": "^2.2.1",
     "js-cookie": "^2.2.1",
     "nprogress": "^0.2.0",
+    "remixicon": "^2.5.0",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-clipboard2": "^0.3.1",

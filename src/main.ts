@@ -1,6 +1,8 @@
 
 import Vue from 'vue'
 import { getModule } from 'vuex-module-decorators'
+import 'remixicon/fonts/remixicon.css'
+
 import App from '@/App.vue'
 import i18n from '@/lang'
 import vuetify from '@/plugins/vuetify'
@@ -26,7 +28,7 @@ for (let i = 0; i < nodes.length; ++i) {
       appModule.setToken({ id, address })
 
       // check if Address/ID is verified at this origin
-      // otherwise trigger message signature requirement
+      // otherwise trigger message cert requirement
       try {
         const result = await certifyNFT({
           contract: address,
@@ -34,10 +36,10 @@ for (let i = 0; i < nodes.length; ++i) {
         })
 
         if (result.code === 200) {
-          this.$store.dispatch('setVerified', true)
+          this.$store.dispatch('setCert', result.data)
         }
       } catch (err) {
-        this.$store.dispatch('setVerified', false)
+        this.$store.dispatch('setCert', null)
       }
     },
     render: (h) => h(App)

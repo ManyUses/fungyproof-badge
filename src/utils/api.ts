@@ -10,8 +10,8 @@ const ENDPOINT = ENV === 'production' ? '/api' : 'http://localhost:8080/api'
  * @param data
  * @returns
  */
-export const gradeNFT = (data: any) =>
-  axios.post(`${ENDPOINT}/grade`, data, { timeout: 5000 })
+export const gradeNFT = (data: any, network = 1) =>
+  axios.post(`${ENDPOINT}/grade?network=${network}`, data, { timeout: 5000 })
 
 /**
  * Certify an NFT

@@ -74,7 +74,7 @@ export default class extends Vue {
       )
 
       if (result.code === 200) {
-        this.authModule.setVerified(true)
+        this.authModule.setCert(result.data)
       } else {
         console.log(result)
       }
