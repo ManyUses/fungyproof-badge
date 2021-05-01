@@ -1,14 +1,31 @@
 <template>
   <div class="view-main">
     <p class="text-center">
-      Verify ownership of {{ contract }} ({{ tokenId }}) for "{{ origin }}"
+      <strong>ID:&nbsp;</strong><span>{{ tokenId | shorten }}</span><br>
+      <strong>Contract:&nbsp;</strong><span>{{ contract | shorten }}</span><br>
+      <strong>Domain:&nbsp;</strong>{{ origin }}<br>
+      <strong>Network:&nbsp;</strong><span>{{ chain ? chain.name : '' }}</span>
     </p>
     <v-btn
       color="primary"
-      @click="verify"
+      class="mt-2"
+      :loading="loading"
+      @click="certify"
     >
-      Verify
+      Verify Ownership
     </v-btn>
+    <v-fade-transition>
+      <v-alert
+        v-if="error"
+        dense
+        color="red lightn-2"
+        class="white ma-2"
+        outlined
+        text
+      >
+        {{ error }}
+      </v-alert>
+    </v-fade-transition>
   </div>
 </template>
 
@@ -22,9 +39,17 @@ import { certifyNFT } from '@/utils/api'
 
 @Component({
   name: 'Verify',
-  components: {}
+  components: {},
+  filters: {
+    shorten(val: string) {
+      return (val && val.length >= 15) ? val.substr(0, 6) + '...' + val.slice(-6) : val
+    }
+  }
 })
 export default class extends Vue {
+  private loading = false
+  private error = ''
+
   private get authModule() {
     return getModule(AuthModule, this.$store)
   }
@@ -61,7 +86,8 @@ export default class extends Vue {
     return getChain(this.chainId)
   }
 
-  private async verify() {
+  private async certify() {
+    this.error = ''
     try {
       const result = await certifyNFT(
         {
@@ -79,7 +105,7 @@ export default class extends Vue {
         console.log(result)
       }
     } catch (err) {
-      console.log(err)
+      this.error = 'Verification failed, check your network and selected address.'
     }
   }
 }
@@ -91,11 +117,11 @@ export default class extends Vue {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 240px;
+  min-height: 260px;
 
-  p.text-center {
-    overflow-wrap: break-word;
-    max-width: 90vw;
+  .text-center {
+    margin: 10px 0;
+    font-size: 15px !important;
   }
 }
 </style>

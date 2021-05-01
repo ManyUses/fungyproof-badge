@@ -1,8 +1,5 @@
 <template>
   <div class="view-main">
-    <p class="text-center">
-      Connect a wallet to verify ownership of {{ contract }} ({{ tokenId }}) for "{{ origin }}"
-    </p>
     <ConnectBtn />
   </div>
 </template>
@@ -23,18 +20,6 @@ export default class extends Vue {
   private get appModule() {
     return getModule(AppModule, this.$store)
   }
-
-  private get contract() {
-    return this.appModule.contract
-  }
-
-  private get tokenId() {
-    return this.appModule.tokenId
-  }
-
-  private get origin() {
-    return window.location.hostname
-  }
 }
 </script>
 
@@ -44,6 +29,12 @@ export default class extends Vue {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 240px;
+  min-height: 260px;
+  background-image: url("https://fungyproof.com/images/fungyproof-badge.jpg");
+  background-size: contain;
+
+  .title {
+    text-transform: uppercase;
+  }
 }
 </style>

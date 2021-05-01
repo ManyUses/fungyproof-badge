@@ -1,24 +1,16 @@
 <template>
-  <v-app :style="{background: $vuetify.theme.themes[theme].background}">
+  <v-app :style="{background: 'transparent'}">
     <Account />
-    <v-tabs
-      v-if="cert"
-      right
-    >
-      <v-tab
-        :ripple="false"
-        @click="view = 'Token'"
+    <v-card outlined>
+      <v-fade-transition
+        mode="out-in"
       >
-        Token
-      </v-tab>
-      <v-tab
-        :ripple="false"
-        @click="view = 'Grade'"
-      >
-        Grade
-      </v-tab>
-    </v-tabs>
-    <v-component :is="view" />
+        <v-component
+          :is="view"
+          @change="onChange"
+        />
+      </v-fade-transition>
+    </v-card>
   </v-app>
 </template>
 <script lang="ts">
@@ -86,13 +78,14 @@ export default class extends mixins(ResizeMixin) {
   private setView() {
     this.view = (this.cert ? 'Token' : (this.address ? 'Verify' : 'Connect'))
   }
+
+  private onChange(view: string) {
+    this.view = view
+  }
 }
 </script>
 <style scoped>
-.theme--light.v-tabs .v-tab--active:focus::before,
-.theme--light.v-tabs .v-tab--active:hover::before,
-.theme--light.v-tabs .v-tab--active::before,
-.theme--light.v-tabs .v-tab:hover::before {
-   opacity: 0;
+.v-application {
+  width: 320px;
 }
 </style>

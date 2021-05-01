@@ -9,6 +9,21 @@
   <title>
     <%= webpackConfig.name %>
   </title>
+  <style>
+    body {
+      padding: 0 20%;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .col {
+      display: flex;
+      justify-content: center;
+      width: 50%;
+    }
+  </style>
 </head>
 
 <body>
@@ -16,25 +31,30 @@
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
         Please enable it to continue.</strong>
   </noscript>
-  <fungy-proof-badge contract="0xee45b41d1ac24e9a620169994deb22739f64f231" token-id="115115607225547789698240061392900361504346066541986664607427365420492730138625">
-      <div style="display: flex;align-items: center;justify-content: center;height: 100vh;">
-          <div style="display: flex; text-align: center;">
-            <div>
-              <img src="https://uploads-ssl.webflow.com/605cf63e34019e5e7e82d5a3/605e2aaea72d2f57be1c4001_circle-loader.gif" style="width: 50px;display: block;">
+  <div class="row">
+    <div class="col">
+      <fungy-proof-badge contract="0xee45b41d1ac24e9a620169994deb22739f64f231" token-id="115115607225547789698240061392900361504346066541986664607427365420492730138625">
+          <div style="display: flex;align-items: center;justify-content: center;height: 100vh;">
+              <div style="display: flex; text-align: center;">
+                <div>
+                  <img src="https://fungyproof.com/images/loader.gif" style="width: 50px;display: block;">
+                </div>
             </div>
-        </div>
-      </div>
-    </div>
-  </fungy-proof-badge>
-  <fungy-proof-badge contract="0xfa69bf285fae58b49af8d01fc42264417b2c0c4d" token-id="12">
-    <div style="display: flex;align-items: center;justify-content: center;height: 100vh;">
-        <div style="display: flex; text-align: center;">
-          <div>
-            <img src="https://uploads-ssl.webflow.com/605cf63e34019e5e7e82d5a3/605e2aaea72d2f57be1c4001_circle-loader.gif" style="width: 50px;display: block;">
           </div>
-      </div>
+      </fungy-proof-badge>
     </div>
-  </fungy-proof-badge>
+    <div class="col">
+      <fungy-proof-badge contract="0xfa69bf285fae58b49af8d01fc42264417b2c0c4d" token-id="12">
+        <div style="display: flex;align-items: center;justify-content: center;height: 100vh;">
+            <div style="display: flex; text-align: center;">
+              <div>
+                <img src="https://fungyproof.com/images/loader.gif" style="width: 50px;display: block;">
+              </div>
+          </div>
+        </div>
+      </fungy-proof-badge>
+    </div>
+  </div>
 </div>
 </body>
 

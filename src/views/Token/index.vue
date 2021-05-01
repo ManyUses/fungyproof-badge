@@ -1,10 +1,60 @@
 <template>
-  <div class="view-token pa-4">
+  <div>
     <v-img
-      v-if="image"
       :src="image"
-      max-width="240"
-    />
+      min-height="260"
+    >
+      <template v-slot:placeholder>
+        <v-row
+          class="fill-height ma-0"
+          align="center"
+          justify="center"
+        >
+          <v-img
+            src="https://fungyproof.com/images/loader.gif"
+            max-width="50"
+          />
+        </v-row>
+      </template>
+      <v-avatar
+        v-if="grade"
+        size="75"
+        @click="$emit('change', 'grade')"
+      >
+        <v-img
+          :src="`https://fungyproof.com/images/badge-${grade.grade.toLowerCase()}.jpg`"
+        />
+      </v-avatar>
+    </v-img>
+    <div class="addy d-flex pa-2 grey lighten-4">
+      <span>Verified Owner:</span>
+      <v-spacer />
+      <v-btn
+        outlined
+        x-small
+        target="_blank"
+        :href="`https://etherscan.com/address/${address}`"
+      >
+        {{ address | shorten }}
+      </v-btn>
+    </div>
+    <v-card-title>
+      {{ meta ? meta.name : "loading..." }}
+    </v-card-title>
+    <v-card-text>
+      <p>{{ meta ? meta.description : "loading..." }}</p>
+    </v-card-text>
+    <v-card-actions v-if="meta && meta.external_link">
+      <v-btn
+        color="primary"
+        block
+        target="_blank"
+        :ripple="false"
+        :href="meta.external_link"
+      >
+        View / Buy
+      </v-btn>
+    </v-card-actions>
   </div>
 </template>
 
@@ -18,10 +68,20 @@ import { gradeNFT } from '@/utils/api'
 
 @Component({
   name: 'Token',
-  components: {}
+  components: {},
+  filters: {
+    shorten(val: string) {
+      return val && val.length >= 15
+        ? val.substr(0, 8) + '...' + val.slice(-8)
+        : val
+    }
+  }
 })
 export default class extends Vue {
-  private image = null
+  private image = null;
+  private grade: any = null;
+  private meta: any = null;
+
   private get appModule() {
     return getModule(AppModule, this.$store)
   }
@@ -38,24 +98,41 @@ export default class extends Vue {
     return getChain(this.chainId)
   }
 
+  private get address() {
+    return (this.authModule.cert as any)?.address
+  }
+
   private async mounted() {
     const cert: any = this.authModule.cert
     if (cert) {
-      const { data } = await gradeNFT({
-        address: this.appModule.contract,
-        id: this.appModule.tokenId
-      }, cert.networkId)
+      const { data } = await gradeNFT(
+        {
+          contract: this.appModule.contract,
+          tokenId: this.appModule.tokenId
+        },
+        cert.networkId
+      )
       this.image = data?.data?.image?.url
+      this.grade = data?.data?.grade
+      this.meta = data?.data?.metadata?.data
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.view-token {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 240px;
+.v-card {
+  position: relative;
+
+  .addy {
+    font-size: 0.9em;
+  }
+}
+
+.v-avatar {
+  cursor: pointer;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 </style>

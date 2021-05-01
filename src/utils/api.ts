@@ -1,8 +1,8 @@
 import axios from 'axios'
 import Web3 from 'web3'
 
-const ENV = process.env.VUE_NODE_ENV
-const ENDPOINT = ENV === 'production' ? '/api' : 'http://localhost:8080/api'
+const ENV = process.env.NODE_ENV
+const ENDPOINT = ENV === 'production' ? 'https://fungyproof.com/api' : 'http://localhost:8080/api'
 
 /**
  * Grade an NFT
@@ -45,7 +45,7 @@ export const certifyNFT = async(
     })
   }
 
-  const { data } = await axios.post(`${ENDPOINT}/certify?network=${network}`, params, { timeout: 5000 })
+  const { data } = await axios.post(`${ENDPOINT}/certificate?network=${network}`, params, { timeout: 5000 })
 
   return data
 }

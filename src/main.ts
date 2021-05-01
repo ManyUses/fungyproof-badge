@@ -1,7 +1,6 @@
 
 import Vue from 'vue'
 import { getModule } from 'vuex-module-decorators'
-import 'remixicon/fonts/remixicon.css'
 
 import App from '@/App.vue'
 import i18n from '@/lang'

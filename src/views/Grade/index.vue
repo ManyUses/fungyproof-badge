@@ -1,25 +1,87 @@
 <template>
   <div class="view-grade">
-    <v-row
+    <div
       v-if="grade"
-      flex
-      align="center"
+      class="grade-wrap"
     >
-      <v-col>
+      <v-btn
+        icon
+        class="close"
+        @click="$emit('change', 'token')"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+        >
+          <path
+            fill="none"
+            d="M0 0h24v24H0z"
+          />
+          <path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
+        </svg>
+      </v-btn>
+      <v-avatar
+        v-if="grade"
+        size="160"
+        class="ma-4"
+        @click="$emit('change', 'grade')"
+      >
         <v-img
-          :src="`img/fungy-grade-badge-${grade.grade.toLowerCase()}.jpg`"
-          max-width="240"
+          :src="`https://fungyproof.com/images/badge-${grade.grade.toLowerCase()}.jpg`"
         />
-      </v-col>
-      <v-col>
-        <v-list>
-          <v-list-item>Eco Impact: {{ grade.environment.score }}/{{ grade.environment.max }}</v-list-item>
-          <v-list-item>Immutability: {{ grade.immutability.score }}/{{ grade.immutability.max }}</v-list-item>
-          <v-list-item>Metadata: {{ grade.metadata.score }}/{{ grade.metadata.max }}</v-list-item>
-          <v-list-item>Marketability: {{ grade.marketability.score }}/{{ grade.marketability.max }}</v-list-item>
-        </v-list>
-      </v-col>
-    </v-row>
+      </v-avatar>
+      <v-expansion-panels
+        accordion
+        class="mt-4"
+      >
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            Eco Impact: {{ grade.environment.score }}/{{ grade.environment.max }}
+          </v-expansion-panel-header>
+          <v-expansion-panel-content class="text-left">
+            <div class="d-block">
+              <span v-html="grade.environment.message" />
+              <v-btn
+                href="https://offsetra.com/buy/by-the-tonne"
+                target="_blank"
+                class="mt-4"
+                small
+                color="primary"
+                :ripple="false"
+              >
+                Buy Carbon Offsets
+              </v-btn>
+            </div>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            Immutability: {{ grade.immutability.score }}/{{ grade.immutability.max }}
+          </v-expansion-panel-header>
+          <v-expansion-panel-content class="text-left">
+            <span v-html="grade.immutability.message" />
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            Metadata: {{ grade.metadata.score }}/{{ grade.metadata.max }}
+          </v-expansion-panel-header>
+          <v-expansion-panel-content class="text-left">
+            <span v-html="grade.metadata.message" />
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+        <v-expansion-panel>
+          <v-expansion-panel-header>
+            Marketability: {{ grade.marketability.score }}/{{ grade.marketability.max }}
+          </v-expansion-panel-header>
+          <v-expansion-panel-content class="text-left">
+            <span v-html="grade.marketability.message" />
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </div>
     <div
       v-else
       class="d-flex align-center justify-center"
@@ -67,8 +129,8 @@ export default class extends Vue {
     const cert: any = this.authModule.cert
     if (cert) {
       const { data } = await gradeNFT({
-        address: this.appModule.contract,
-        id: this.appModule.tokenId
+        contract: this.appModule.contract,
+        tokenId: this.appModule.tokenId
       }, cert.networkId)
       this.grade = data?.data?.grade
     }
@@ -81,6 +143,23 @@ export default class extends Vue {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 240px;
+  min-height: 260px;
+
+  .grade-wrap {
+    position: relative;
+    text-align: center;
+    min-width: 260px;
+
+    .v-list-item {
+      justify-content: center;
+    }
+
+    .v-btn.close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 10;
+    }
+  }
 }
 </style>
