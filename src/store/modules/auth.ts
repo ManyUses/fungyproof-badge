@@ -11,7 +11,7 @@ export type NFTCertificate = {
 export interface IAuthState {
   provider: any
   address: string
-  cert: NFTCertificate|null
+  cert: NFTCertificate|null|false
 }
 
 @Module({ name: 'auth', stateFactory: true })

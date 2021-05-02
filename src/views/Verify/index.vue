@@ -103,6 +103,7 @@ export default class extends Vue {
         this.authModule.setCert(result.data)
       } else {
         console.log(result)
+        this.error = 'Verification failed, check your network and selected address.'
       }
     } catch (err) {
       this.error = 'Verification failed, check your network and selected address.'

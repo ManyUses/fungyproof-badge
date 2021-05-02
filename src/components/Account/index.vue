@@ -180,7 +180,7 @@ export default class extends Vue {
 
       // handle account changes
       provider.on('accountsChanged', (addresses: string[]) => {
-        console.log(addresses)
+        // console.log(addresses)
         this.authModule.setAddress(provider.selectedAddress)
       })
     })

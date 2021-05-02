@@ -17,6 +17,9 @@ import Views from '@/views/index.vue'
 export default class extends Vue {}
 </script>
 <style lang="scss">
+.v-application {
+  font-size: 16px;
+}
 #nprogress .bar {
    background: var(--v-primary-base) !important;
 }

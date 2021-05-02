@@ -48,6 +48,7 @@
                 target="_blank"
                 class="mt-4"
                 small
+                block
                 color="primary"
                 :ripple="false"
               >

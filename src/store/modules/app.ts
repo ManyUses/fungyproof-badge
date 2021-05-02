@@ -77,10 +77,10 @@ export class AppModule extends VuexModule implements IAppState {
 
   @Action
   public setToken(token: {
-    address: string
+    contract: string
     id: string
   }) {
-    this.SET_TOKEN_ADDRESS(token.address)
+    this.SET_TOKEN_ADDRESS(token.contract)
     this.SET_TOKEN_ID(token.id || '')
   }
 

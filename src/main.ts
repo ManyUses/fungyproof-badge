@@ -23,22 +23,22 @@ for (let i = 0; i < nodes.length; ++i) {
     async beforeMount() {
       const appModule = getModule(AppModule, this.$store)
       const id = this.$el.getAttribute('token-id') || ''
-      const address = this.$el.getAttribute('contract') || ''
-      appModule.setToken({ id, address })
+      const contract = this.$el.getAttribute('contract') || ''
+      appModule.setToken({ id, contract })
 
       // check if Address/ID is verified at this origin
       // otherwise trigger message cert requirement
       try {
         const result = await certifyNFT({
-          contract: address,
+          contract,
           tokenId: id
         })
 
         if (result.code === 200) {
-          this.$store.dispatch('setCert', result.data)
+          this.$store.commit('SET_CERT', result.data)
         }
       } catch (err) {
-        this.$store.dispatch('setCert', null)
+        this.$store.commit('SET_CERT', false)
       }
     },
     render: (h) => h(App)

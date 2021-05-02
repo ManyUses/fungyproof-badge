@@ -1,7 +1,10 @@
 <template>
   <v-app :style="{background: 'transparent'}">
     <Account />
-    <v-card outlined>
+    <v-card
+      v-if="view"
+      outlined
+    >
       <v-fade-transition
         mode="out-in"
       >
@@ -37,7 +40,8 @@ import Grade from '@/views/Grade/index.vue'
   }
 })
 export default class extends mixins(ResizeMixin) {
-  private view = 'Token'
+  private view = ''
+  private loaded = false
 
   private get authModule() {
     return getModule(AuthModule, this.$store)
@@ -61,17 +65,20 @@ export default class extends mixins(ResizeMixin) {
     return this.authModule.cert
   }
 
-  public mounted() {
-    this.setView()
-  }
+  // public mounted() {
+  //   console.log('mounted', this.cert)
+  //   // this.setView()
+  // }
 
   @Watch('address')
   private watchAddress() {
+    // console.log('watchAddr', this.address)
     this.setView()
   }
 
   @Watch('cert')
   private watchCert() {
+    // console.log('watchCert', this.cert)
     this.setView()
   }
 
