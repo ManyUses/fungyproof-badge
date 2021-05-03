@@ -1,18 +1,40 @@
 
-![FungyProof Badge](banner.jpg)
+![FungyProof Badge](docs/banner.jpg)
 
-Create an embeddable badge for token holders and token creation platforms which allows them to display their Eco Impact grade using signed validation of token/contract ownership.
+An embeddable badge for token holders and token creation platforms which enables the display of an NFTs Eco Impact, Immutability, Metadata, and Marketability grade using signed validation of token/contract ownership.
+
+https://badge.fungyproof.com
 
 ## Usage
 
-[WIP]
+**Installation**
 
----
+To add a badge to a page include the following script and html tag in your page. 
+
+_TIP: you can include more than one html tag to embed multiple tokens._
 
 ```html
 <script src="https://funyproof.com/badge.js" />
 <fungy-proof-badge contract="0x2352525..." token-id="12" />
 ```
+
+**Verification**
+
+To add a badge to a website you will need to certify ownership of the token. This is done by connecting a wallet (Metamask only for now) and signing a message. The wallet/address must be the owner of the NFT and the certification will only be valid for the current domain.
+
+![FungyProof Badge](docs/badge-verify.png)
+
+**Display**
+
+Once a token is verified, future views of the badge will display the tokens grade and image.
+
+![FungyProof Badge](docs/badge-token.png)
+
+**Grade**
+
+Clicking on the tokens grade displays the results of the grade and each category. An option to bounce to carbon.fyi to purchase carbon offsets for the NFT is available under the Eco Impact results.
+
+![FungyProof Badge](docs/badge-grade.png)
 
 
 ## Contributing
