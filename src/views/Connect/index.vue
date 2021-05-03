@@ -1,9 +1,19 @@
 <template>
   <div class="view-main">
-    <ConnectBtn />
+    <div>
+      <v-img
+        contain
+        max-width="200"
+        style="margin: 0 auto;"
+        src="https://fungyproof.com/images/fungy-logo-black.jpg"
+      />
+      <p class="text-center my-4">
+        Connect a wallet to verify ownership of your NFT badge.
+      </p>
+      <ConnectBtn />
+    </div>
   </div>
 </template>
-
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
@@ -22,7 +32,6 @@ export default class extends Vue {
   }
 }
 </script>
-
 <style lang="scss" scoped>
 .view-main {
   display: flex;
@@ -30,8 +39,7 @@ export default class extends Vue {
   justify-content: center;
   align-items: center;
   min-height: 260px;
-  background-image: url("https://fungyproof.com/images/fungyproof-badge.jpg");
-  background-size: contain;
+  padding: 0 20px;
 
   .title {
     text-transform: uppercase;
