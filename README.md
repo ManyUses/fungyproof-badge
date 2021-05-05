@@ -28,7 +28,7 @@ To add a badge to a website you will need to certify ownership of the token. Thi
 
 Once a token is verified, future views of the badge will display the tokens grade and image.
 
-![FungyProof Badge](docs/badge-token.png)
+![FungyProof Badge](docs/badge.png)
 
 **Grade**
 
@@ -37,7 +37,10 @@ Clicking on the tokens grade displays the results of the grade and each category
 ![FungyProof Badge](docs/badge-grade.png)
 
 
+---
+
 ## Contributing
+
 ```
 yarn install
 ```
