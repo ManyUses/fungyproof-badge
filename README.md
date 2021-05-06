@@ -5,6 +5,15 @@ An embeddable badge for token holders and token creation platforms which enables
 
 https://badge.fungyproof.com
 
+---
+
+This work was originally done for the [Green NFT Hackathon: Solutions Prize Bounty](https://gitcoin.co/issue/GreenNFT/GreenNFTs/1/100025260).
+
+Submitted: 05/06/2021
+
+Authors: Mike Roth, Brandon Roth
+
+
 ## Usage
 
 **Installation**
@@ -32,7 +41,7 @@ Once a token is verified, future views of the badge will display the tokens grad
 
 **Grade**
 
-Clicking on the tokens grade displays the results of the grade and each category. An option to bounce to carbon.fyi to purchase carbon offsets for the NFT is available under the Eco Impact results.
+Clicking on the tokens grade displays the results of the grade and each category. An option to bounce to Offsetra to purchase carbon offsets for the NFT is available under the Eco Impact results.
 
 ![FungyProof Badge](docs/badge-grade.png)
 

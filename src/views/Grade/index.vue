@@ -62,7 +62,21 @@
             Immutability: {{ grade.immutability.score }}/{{ grade.immutability.max }}
           </v-expansion-panel-header>
           <v-expansion-panel-content class="text-left">
-            <span v-html="grade.immutability.message" />
+            <div class="d-block">
+              <span v-html="grade.immutability.message" />
+              <v-btn
+                v-if="imageURL"
+                :href="imageURL"
+                target="_blank"
+                class="mt-4"
+                small
+                block
+                color="primary"
+                :ripple="false"
+              >
+                View Image
+              </v-btn>
+            </div>
           </v-expansion-panel-content>
         </v-expansion-panel>
         <v-expansion-panel>
@@ -70,7 +84,21 @@
             Metadata: {{ grade.metadata.score }}/{{ grade.metadata.max }}
           </v-expansion-panel-header>
           <v-expansion-panel-content class="text-left">
-            <span v-html="grade.metadata.message" />
+            <div class="d-block">
+              <span v-html="grade.metadata.message" />
+              <v-btn
+                v-if="metadataURL"
+                :href="metadataURL"
+                target="_blank"
+                class="mt-4"
+                small
+                block
+                color="primary"
+                :ripple="false"
+              >
+                View Metadata
+              </v-btn>
+            </div>
           </v-expansion-panel-content>
         </v-expansion-panel>
         <v-expansion-panel>
@@ -109,6 +137,8 @@ import { AuthModule } from '@/store/modules/auth'
 })
 export default class extends Vue {
   private grade: any = null
+  private imageURL = ''
+  private metadataURL = ''
 
   private get appModule() {
     return getModule(AppModule, this.$store)
@@ -134,6 +164,8 @@ export default class extends Vue {
         tokenId: this.appModule.tokenId
       }, cert.networkId)
       this.grade = data?.data?.grade
+      this.imageURL = data?.data?.image?.url
+      this.metadataURL = data?.data?.metadata?.url
     }
   }
 }

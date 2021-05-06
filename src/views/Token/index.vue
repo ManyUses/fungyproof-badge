@@ -18,7 +18,7 @@
       </template>
       <v-avatar
         v-if="grade"
-        size="75"
+        size="80"
         @click="$emit('change', 'grade')"
       >
         <v-img

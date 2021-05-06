@@ -19,6 +19,7 @@ export default class extends Vue {}
 <style lang="scss">
 .v-application {
   font-size: 16px;
+  position: relative;
 }
 #nprogress .bar {
    background: var(--v-primary-base) !important;
