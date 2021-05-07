@@ -4,6 +4,7 @@
     <v-card
       v-if="view"
       outlined
+      :loading="loading"
     >
       <v-fade-transition
         mode="out-in"
@@ -20,10 +21,12 @@
 import { Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { mixins } from 'vue-class-component'
-import { DeviceType } from '@/store/modules/app'
+import { certifyNFT } from '@/utils/api'
+import { AppModule, DeviceType } from '@/store/modules/app'
 import { AuthModule } from '@/store/modules/auth'
 import ResizeMixin from '@/mixins/resize'
 import Account from '@/components/Account/index.vue'
+import Loading from '@/views/Loading/index.vue'
 import Connect from '@/views/Connect/index.vue'
 import Verify from '@/views/Verify/index.vue'
 import Token from '@/views/Token/index.vue'
@@ -32,6 +35,7 @@ import Grade from '@/views/Grade/index.vue'
 @Component({
   name: 'Views',
   components: {
+    Loading,
     Account,
     Connect,
     Verify,
@@ -40,11 +44,15 @@ import Grade from '@/views/Grade/index.vue'
   }
 })
 export default class extends mixins(ResizeMixin) {
-  private view = ''
-  private loaded = false
+  private view = 'Loading'
+  private loading = false
 
-  private get authModule() {
+  public get authModule() {
     return getModule(AuthModule, this.$store)
+  }
+
+  private get appMod() {
+    return getModule(AppModule, this.$store)
   }
 
   private get classObj() {
@@ -57,6 +65,14 @@ export default class extends mixins(ResizeMixin) {
     return (this as any).$vuetify.theme.dark ? 'dark' : 'light'
   }
 
+  private get contract() {
+    return this.appMod.contract
+  }
+
+  private get tokenId() {
+    return this.appMod.tokenId
+  }
+
   private get address() {
     return this.authModule.address
   }
@@ -65,20 +81,30 @@ export default class extends mixins(ResizeMixin) {
     return this.authModule.cert
   }
 
-  // public mounted() {
-  //   console.log('mounted', this.cert)
-  //   // this.setView()
-  // }
+  public async mounted() {
+    try {
+      const result = await certifyNFT({
+        contract: this.contract,
+        tokenId: this.tokenId
+      })
+
+      if (result.code === 200) {
+        this.$store.commit('SET_CERT', result.data)
+        this.view = 'Token'
+      }
+    } catch (err) {
+      this.$store.commit('SET_CERT', false)
+      this.view = (this.address ? 'Verify' : 'Connect')
+    }
+  }
 
   @Watch('address')
   private watchAddress() {
-    // console.log('watchAddr', this.address)
     this.setView()
   }
 
   @Watch('cert')
   private watchCert() {
-    // console.log('watchCert', this.cert)
     this.setView()
   }
 

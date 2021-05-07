@@ -67,18 +67,6 @@
       <v-divider />
 
       <v-list>
-        <v-list-item>
-          <v-btn
-            small
-            block
-            color="primary"
-            class="font-weight-bold"
-            @click="showModal"
-          >
-            <span v-if="address">Change Wallet</span>
-            <span v-else>Connect Wallet</span>
-          </v-btn>
-        </v-list-item>
         <v-list-item v-if="address">
           <v-btn
             small
@@ -88,6 +76,17 @@
             @click="disconnect"
           >
             Disconnect
+          </v-btn>
+        </v-list-item>
+        <v-list-item v-else>
+          <v-btn
+            small
+            block
+            color="primary"
+            class="font-weight-bold"
+            @click="showModal"
+          >
+            <span>Connect Wallet</span>
           </v-btn>
         </v-list-item>
       </v-list>

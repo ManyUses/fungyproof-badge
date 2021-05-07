@@ -11,7 +11,7 @@ const ENDPOINT = ENV === 'production' ? 'https://fungyproof.com/api' : 'http://l
  * @returns
  */
 export const gradeNFT = (data: any, network = 1) =>
-  axios.post(`${ENDPOINT}/grade?network=${network}`, data, { timeout: 5000 })
+  axios.post(`${ENDPOINT}/grade?network=${network}`, data, { timeout: 15000 })
 
 /**
  * Certify an NFT
@@ -45,7 +45,7 @@ export const certifyNFT = async(
     })
   }
 
-  const { data } = await axios.post(`${ENDPOINT}/certificate?network=${network}`, params, { timeout: 5000 })
+  const { data } = await axios.post(`${ENDPOINT}/certificate?network=${network}`, params, { timeout: 15000 })
 
   return data
 }
