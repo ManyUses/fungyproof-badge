@@ -26,7 +26,10 @@
         />
       </v-avatar>
     </v-img>
-    <div v-if="address" class="addy d-flex pa-2 primary white--text" >
+    <div
+      v-if="address"
+      class="addy d-flex pa-2 grey lighten-5"
+    >
       <span>Verified Owner:</span>
       <v-spacer />
       <v-btn
@@ -120,7 +123,12 @@ export default class extends Vue {
 .v-card {
   position: relative;
 
+  .v-card__title {
+    word-break: break-word;
+  }
+
   .addy {
+    border-top: 1px solid white;
     font-size: 0.9em;
   }
 }

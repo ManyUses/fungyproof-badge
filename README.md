@@ -29,18 +29,12 @@ _TIP: you can include more than one html tag to embed multiple tokens._
 
 ```html
 <script src="https://funyproof.com/badge.js" />
-<fungy-proof-badge contract="0x2352525..." token-id="12" />
+<fungy-proof-badge contract="0x2352525..." token-id="12" network-id="4" />
 ```
-
-**Verification**
-
-To add a badge to a website you will need to certify ownership of the token. This is done by connecting a wallet (Metamask only for now) and signing a message. The wallet/address must be the owner of the NFT and the certification will only be valid for the current domain.
-
-![FungyProof Badge](docs/badge-verify.png)
 
 **Display**
 
-Once a token is verified, future views of the badge will display the tokens grade and image.
+The badge displays the token and it's grade by default.
 
 ![FungyProof Badge](docs/badge.png)
 
@@ -50,6 +44,13 @@ Clicking on the tokens grade displays the results of the grade and each category
 
 ![FungyProof Badge](docs/badge-grade.png)
 
+**Verification**
+
+To certify ownership of a token. Connect a wallet (Metamask only for now) and sign a message. The wallet/address must be the owner of the NFT and the certification will only be valid for the current domain.
+
+Once a token is verified, future views of the badge will display the tokens verified owner.
+
+![FungyProof Badge](docs/badge-verify.png)
 
 ---
 

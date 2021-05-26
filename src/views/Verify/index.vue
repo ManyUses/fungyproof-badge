@@ -22,12 +22,12 @@
       <strong>ID:&nbsp;</strong><span>{{ tokenId | shorten }}</span><br>
       <strong>Contract:&nbsp;</strong><span>{{ contract | shorten }}</span><br>
       <strong>Domain:&nbsp;</strong>{{ origin }}<br>
-      <strong>Network:&nbsp;</strong><span>{{ requiredNetwork.name }}</span><br>
+      <strong>Network:&nbsp;</strong><span>{{ requiredNetwork ? requiredNetwork.name : '' }}</span><br>
       <span
         v-if="wrongNetwork"
         class="subtitle-2 red--text px-10 mt-2 d-block"
       >
-        Connect your wallet to {{ requiredNetwork.name }} to verify.
+        Connect your wallet to {{ requiredNetwork ? requiredNetwork.name : '' }} to verify.
       </span>
     </p>
     <v-btn
