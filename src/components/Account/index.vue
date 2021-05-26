@@ -1,6 +1,7 @@
 <template>
   <v-menu
-    v-model="menu"
+    v-model="open"
+    :value="menu"
     :close-on-content-click="false"
     :attach="`#acct-${badgeId}`"
     :nudge-bottom="30"
@@ -20,7 +21,7 @@
         v-on="on"
       >
         <svg
-          v-if="!menu"
+          v-if="!open"
           viewBox="0 0 24 24"
           width="24"
           height="24"
@@ -32,7 +33,7 @@
           d="M18 7h3a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h15v4zM4 9v10h16V9H4zm0-4v2h12V5H4zm11 8h3v2h-3v-2z"
         /></svg>
         <svg
-          v-if="menu"
+          v-if="open"
           viewBox="0 0 24 24"
           width="24"
           height="24"
@@ -60,6 +61,22 @@
                 target="_blank"
               >{{ chainName }}</a>
             </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="address && !cert">
+          <v-list-item-content>
+            <v-list-item-subtitle>
+              Own this token?
+            </v-list-item-subtitle>
+            <v-btn
+              small
+              block
+              color="success"
+              class="font-weight-bold"
+              @click="showVerify"
+            >
+              Verify Ownership
+            </v-btn>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -90,18 +107,6 @@
           </v-btn>
         </v-list-item>
       </v-list>
-
-      <!-- <v-card-actions>
-        <v-spacer />
-
-        <v-btn
-          text
-          small
-          @click="menu = false"
-        >
-          Close
-        </v-btn>
-      </v-card-actions> -->
     </v-card>
   </v-menu>
 </template>
@@ -122,6 +127,7 @@ import { getChain } from '@fungyproof/eth-nft'
 })
 export default class extends Vue {
   private menu = false
+  private open = false
   private modal: any = null
   private loaded = false
 
@@ -131,6 +137,10 @@ export default class extends Vue {
 
   private get authModule() {
     return getModule(AuthModule, this.$store)
+  }
+
+  private get cert() {
+    return this.authModule.cert
   }
 
   // HACK: fix vuetify menu attach
@@ -223,7 +233,6 @@ export default class extends Vue {
   private async showModal() {
     await this.modal.clearCachedProvider()
     this.modal.toggleModal()
-    this.menu = false
   }
 
   private async disconnect() {
@@ -232,6 +241,13 @@ export default class extends Vue {
     }
     await this.modal.clearCachedProvider()
     this.authModule.setAddress('')
+  }
+
+  private async showVerify() {
+    this.appModule.setView('Verify')
+    this.$nextTick(() => {
+      this.menu = false
+    })
   }
 }
 </script>

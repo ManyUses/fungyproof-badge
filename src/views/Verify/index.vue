@@ -1,10 +1,34 @@
 <template>
   <div class="view-main">
+    <v-btn
+      icon
+      class="close"
+      @click="$emit('change', 'token')"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+      >
+        <path
+          fill="none"
+          d="M0 0h24v24H0z"
+        />
+        <path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z" />
+      </svg>
+    </v-btn>
     <p class="text-center">
       <strong>ID:&nbsp;</strong><span>{{ tokenId | shorten }}</span><br>
       <strong>Contract:&nbsp;</strong><span>{{ contract | shorten }}</span><br>
       <strong>Domain:&nbsp;</strong>{{ origin }}<br>
-      <strong>Network:&nbsp;</strong><span>{{ chain ? chain.name : '' }}</span>
+      <strong>Network:&nbsp;</strong><span>{{ requiredNetwork.name }}</span><br>
+      <span
+        v-if="wrongNetwork"
+        class="subtitle-2 red--text px-10 mt-2 d-block"
+      >
+        Connect your wallet to {{ requiredNetwork.name }} to verify.
+      </span>
     </p>
     <v-btn
       color="primary"
@@ -66,6 +90,10 @@ export default class extends Vue {
     return this.appModule.tokenId
   }
 
+  private get networkId() {
+    return this.appModule.networkId
+  }
+
   private get origin() {
     return window.location.hostname
   }
@@ -86,6 +114,14 @@ export default class extends Vue {
     return getChain(this.chainId)
   }
 
+  private get requiredNetwork() {
+    return getChain(this.networkId)
+  }
+
+  private get wrongNetwork() {
+    return this.chainId !== `0x${this.networkId}`
+  }
+
   private async certify() {
     this.error = ''
     try {
@@ -101,8 +137,8 @@ export default class extends Vue {
 
       if (result.code === 200) {
         this.authModule.setCert(result.data)
+        this.appModule.setView('Token')
       } else {
-        console.log(result)
         this.error = 'Verification failed, check your network and selected address.'
       }
     } catch (err) {
@@ -123,6 +159,13 @@ export default class extends Vue {
   .text-center {
     margin: 10px 0;
     font-size: 15px !important;
+  }
+
+  .v-btn.close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
   }
 }
 </style>

@@ -23,7 +23,8 @@ for (let i = 0; i < nodes.length; ++i) {
       const appModule = getModule(AppModule, this.$store)
       const id = this.$el.getAttribute('token-id') || ''
       const contract = this.$el.getAttribute('contract') || ''
-      appModule.setToken({ id, contract })
+      const networkId = this.$el.getAttribute('network-id') || ''
+      appModule.setToken({ id, contract, networkId })
     },
     render: (h) => h(App)
   }).$mount(nodes[i])

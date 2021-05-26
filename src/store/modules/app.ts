@@ -22,6 +22,7 @@ export interface IAppState {
   dialog: DialogState
   language: string
   size: string
+  grade: any
 }
 
 @Module({ name: 'app', stateFactory: true })
@@ -34,8 +35,16 @@ export class AppModule extends VuexModule implements IAppState {
   public language = getLocale()
   public size = getSize() || 'medium'
 
+  public view = 'Loading'
   public contract = ''
   public tokenId = ''
+  public networkId = ''
+  public grade = null
+
+  @Mutation
+  private SET_VIEW(view: string) {
+    this.view = view
+  }
 
   @Mutation
   private SET_TOKEN_ADDRESS(contract: string) {
@@ -45,6 +54,16 @@ export class AppModule extends VuexModule implements IAppState {
   @Mutation
   private SET_TOKEN_ID(tokenId: string) {
     this.tokenId = tokenId
+  }
+
+  @Mutation
+  private SET_NETWORK_ID(network: string) {
+    this.networkId = network
+  }
+
+  @Mutation
+  private SET_GRADE(grade: any) {
+    this.grade = grade
   }
 
   @Mutation
@@ -79,9 +98,11 @@ export class AppModule extends VuexModule implements IAppState {
   public setToken(token: {
     contract: string
     id: string
+    networkId: string
   }) {
     this.SET_TOKEN_ADDRESS(token.contract)
     this.SET_TOKEN_ID(token.id || '')
+    this.SET_NETWORK_ID(token.networkId)
   }
 
   @Action
@@ -105,5 +126,15 @@ export class AppModule extends VuexModule implements IAppState {
   @Action
   public setSize(size: string) {
     this.SET_SIZE(size)
+  }
+
+  @Action
+  public setGrade(grade: any) {
+    this.SET_GRADE(grade)
+  }
+
+  @Action
+  public setView(view: string) {
+    this.SET_VIEW(view)
   }
 }

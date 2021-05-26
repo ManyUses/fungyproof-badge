@@ -126,8 +126,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import { getChain } from '@fungyproof/eth-nft'
-import { gradeNFT } from '@/utils/api'
 import { AppModule } from '@/store/modules/app'
 import { AuthModule } from '@/store/modules/auth'
 
@@ -136,10 +134,6 @@ import { AuthModule } from '@/store/modules/auth'
   components: {}
 })
 export default class extends Vue {
-  private grade: any = null
-  private imageURL = ''
-  private metadataURL = ''
-
   private get appModule() {
     return getModule(AppModule, this.$store)
   }
@@ -148,25 +142,16 @@ export default class extends Vue {
     return getModule(AuthModule, this.$store)
   }
 
-  private get chainId() {
-    return (this.authModule.provider as any)?.chainId
+  private get imageURL() {
+    return (this.appModule.grade as any)?.image?.url
   }
 
-  private get chain() {
-    return getChain(this.chainId)
+  private get grade() {
+    return (this.appModule.grade as any)?.grade
   }
 
-  private async mounted() {
-    const cert: any = this.authModule.cert
-    if (cert) {
-      const { data } = await gradeNFT({
-        contract: this.appModule.contract,
-        tokenId: this.appModule.tokenId
-      }, cert.networkId)
-      this.grade = data?.data?.grade
-      this.imageURL = data?.data?.image?.url
-      this.metadataURL = data?.data?.metadata?.url
-    }
+  private get metadataURL() {
+    return (this.appModule.grade as any)?.metadata?.url
   }
 }
 </script>

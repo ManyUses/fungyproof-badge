@@ -26,13 +26,15 @@
         />
       </v-avatar>
     </v-img>
-    <div class="addy d-flex pa-2 grey lighten-4">
+    <div v-if="address" class="addy d-flex pa-2 primary white--text" >
       <span>Verified Owner:</span>
       <v-spacer />
       <v-btn
         outlined
         x-small
+        color="blue"
         target="_blank"
+        class="white--text"
         :href="`https://etherscan.com/address/${address}`"
       >
         {{ address | shorten }}
@@ -63,7 +65,6 @@ import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { AuthModule } from '@/store/modules/auth'
 import { AppModule } from '@/store/modules/app'
-import { getChain } from '@fungyproof/eth-nft'
 import { gradeNFT } from '@/utils/api'
 
 @Component({
@@ -78,10 +79,6 @@ import { gradeNFT } from '@/utils/api'
   }
 })
 export default class extends Vue {
-  private image = null;
-  private grade: any = null;
-  private meta: any = null;
-
   private get appModule() {
     return getModule(AppModule, this.$store)
   }
@@ -90,32 +87,31 @@ export default class extends Vue {
     return getModule(AuthModule, this.$store)
   }
 
-  private get chainId() {
-    return (this.authModule.provider as any)?.chainId
-  }
-
-  private get chain() {
-    return getChain(this.chainId)
-  }
-
   private get address() {
     return (this.authModule.cert as any)?.address
   }
 
+  private get image() {
+    return (this.appModule.grade as any)?.image?.url
+  }
+
+  private get grade() {
+    return (this.appModule.grade as any)?.grade
+  }
+
+  private get meta() {
+    return (this.appModule.grade as any)?.metadata?.data
+  }
+
   private async mounted() {
-    const cert: any = this.authModule.cert
-    if (cert) {
-      const { data } = await gradeNFT(
-        {
-          contract: this.appModule.contract,
-          tokenId: this.appModule.tokenId
-        },
-        cert.networkId
-      )
-      this.image = data?.data?.image?.url
-      this.grade = data?.data?.grade
-      this.meta = data?.data?.metadata?.data
-    }
+    const { data } = await gradeNFT(
+      {
+        contract: this.appModule.contract,
+        tokenId: this.appModule.tokenId
+      },
+      Number(this.appModule.networkId)
+    )
+    this.appModule.setGrade(data?.data)
   }
 }
 </script>

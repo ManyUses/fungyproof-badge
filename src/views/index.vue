@@ -27,7 +27,6 @@ import { AuthModule } from '@/store/modules/auth'
 import ResizeMixin from '@/mixins/resize'
 import Account from '@/components/Account/index.vue'
 import Loading from '@/views/Loading/index.vue'
-import Connect from '@/views/Connect/index.vue'
 import Verify from '@/views/Verify/index.vue'
 import Token from '@/views/Token/index.vue'
 import Grade from '@/views/Grade/index.vue'
@@ -37,14 +36,12 @@ import Grade from '@/views/Grade/index.vue'
   components: {
     Loading,
     Account,
-    Connect,
     Verify,
     Token,
     Grade
   }
 })
 export default class extends mixins(ResizeMixin) {
-  private view = 'Loading'
   private loading = false
 
   public get authModule() {
@@ -59,6 +56,10 @@ export default class extends mixins(ResizeMixin) {
     return {
       mobile: this.device === DeviceType.Mobile
     }
+  }
+
+  private get view() {
+    return this.appMod.view
   }
 
   private get theme() {
@@ -90,30 +91,15 @@ export default class extends mixins(ResizeMixin) {
 
       if (result.code === 200) {
         this.$store.commit('SET_CERT', result.data)
-        this.view = 'Token'
       }
     } catch (err) {
       this.$store.commit('SET_CERT', false)
-      this.view = (this.address ? 'Verify' : 'Connect')
     }
-  }
-
-  @Watch('address')
-  private watchAddress() {
-    this.setView()
-  }
-
-  @Watch('cert')
-  private watchCert() {
-    this.setView()
-  }
-
-  private setView() {
-    this.view = (this.cert ? 'Token' : (this.address ? 'Verify' : 'Connect'))
+    this.appMod.setView('Token')
   }
 
   private onChange(view: string) {
-    this.view = view
+    this.appMod.setView(view)
   }
 }
 </script>
